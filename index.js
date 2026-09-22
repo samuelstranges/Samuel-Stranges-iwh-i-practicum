@@ -42,8 +42,24 @@ app.get("/contacts", async (req, res) => {
 });
 
 app.get("/test", async (req, res) => {
+    const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        "Content-Type": "application/json",
+    };
+
     try {
         res.render("test", { title: "Test title" });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+app.get("/updates", async (req, res) => {
+    try {
+        res.render("updates", {
+            title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",
+        });
     } catch (error) {
         console.error(error);
     }
