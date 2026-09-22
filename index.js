@@ -54,6 +54,19 @@ app.get("/test", async (req, res) => {
         console.error(error);
     }
 });
+app.get("/", async (req, res) => {
+    const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        "Content-Type": "application/json",
+    };
+
+    try {
+        res.render("homepage", { title: "Home" });
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 app.get("/updates", async (req, res) => {
     try {
