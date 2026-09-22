@@ -43,6 +43,8 @@ app.get("/contacts", async (req, res) => {
 
 app.get("/test", async (req, res) => {
     const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
+    const pets = [{ test_name: "hello" }, { test_name: "yes" }];
+
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         "Content-Type": "application/json",
@@ -61,8 +63,10 @@ app.get("/", async (req, res) => {
         "Content-Type": "application/json",
     };
 
+    const pets = [{ test_name: "hello" }, { test_name: "yes" }];
+
     try {
-        res.render("homepage", { title: "Home" });
+        res.render("homepage", { title: "Home", pets: pets });
     } catch (error) {
         console.error(error);
     }

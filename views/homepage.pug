@@ -5,13 +5,30 @@ html
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body
-        h1 Pets
+        h1 Custom Object table
+        a(href='//localhost:3000/ubdate-cobj') Add/update to this table
         table()
-            tr
-                th one
-                th two
-                th three
-                th three
+            thead
+                tr
+                    th Name
+                    th Age
+                    th Sickly
+            tbody
+                tr
+                    td Joe
+                    td 55
+                    td No
+                tr
+                    td Rita
+                    td 29
+                    td Yes
+                tr
+                    td John
+                    td 22
+                    td No
 
-        a(href='//localhost:3000/update') Update
-        p This is cool
+                each pet in pets
+                    tr
+                        td #{pet.test_name}
+                        td #{pet.test_name}
+                        td #{pet.test_name}
