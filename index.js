@@ -41,6 +41,14 @@ app.get("/contacts", async (req, res) => {
     }
 });
 
+app.get("/test", async (req, res) => {
+    try {
+        res.render("test", { title: "Test title" });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 /** 
 * * App.post sample
 app.post('/update', async (req, res) => {
