@@ -72,7 +72,7 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.get("/updates", async (req, res) => {
+app.get("/update-cobj", async (req, res) => {
     try {
         res.render("updates", {
             title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",

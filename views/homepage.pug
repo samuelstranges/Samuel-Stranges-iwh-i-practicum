@@ -6,27 +6,13 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body
         h1 Custom Object table
-        a(href='//localhost:3000/ubdate-cobj') Add/update to this table
+        a(href='//localhost:3000/update-cobj') Add/update to this table
         table()
             thead
                 tr
                     th Name
                     th Age
-                    th Sickly
-            tbody
-                tr
-                    td Joe
-                    td 55
-                    td No
-                tr
-                    td Rita
-                    td 29
-                    td Yes
-                tr
-                    td John
-                    td 22
-                    td No
-
+                    th Sickly?
                 each pet in pets
                     tr
                         td #{pet.test_name}
