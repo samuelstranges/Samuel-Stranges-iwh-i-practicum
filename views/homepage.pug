@@ -13,8 +13,9 @@ html
                     th Name
                     th Age
                     th Sickly?
-                each pet in pets
+            tbody
+                each pet in data
                     tr
                         td #{pet.properties.name}
-                        td #{pet.properties.name}
                         td #{pet.properties.age}
+                        td #{pet.properties.sickly}

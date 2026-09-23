@@ -57,17 +57,25 @@ app.get("/test", async (req, res) => {
     }
 });
 
+// Finished method
 app.get("/", async (req, res) => {
-    const contacts = "https://api.hubspot.com/crm/v3/objects/2-282044427";
+    const pets_url = "https://api.hubspot.com/crm/v3/objects/2-282044427";
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         "Content-Type": "application/json",
     };
 
     try {
-        const resp = await axios.get(contacts, { headers });
-        const pets = resp.data.results;
-        res.render("homepage", { title: "Home", pets });
+        const resp = await axios.get(pets_url, {
+            headers,
+
+            params: {
+                // Claude suggested using `params` to pull custom params
+                properties: "name,age,sickly",
+            },
+        });
+        const data = resp.data.results;
+        res.render("homepage", { title: "Home", data });
     } catch (error) {
         console.error(error);
     }
