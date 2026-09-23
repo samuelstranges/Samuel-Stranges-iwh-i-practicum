@@ -56,17 +56,18 @@ app.get("/test", async (req, res) => {
         console.error(error);
     }
 });
+
 app.get("/", async (req, res) => {
-    const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
+    const contacts = "https://api.hubspot.com/crm/v3/objects/2-282044427";
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         "Content-Type": "application/json",
     };
 
-    const pets = [{ test_name: "hello" }, { test_name: "yes" }];
-
     try {
-        res.render("homepage", { title: "Home", pets: pets });
+        const resp = await axios.get(contacts, { headers });
+        const pets = resp.data.results;
+        res.render("homepage", { title: "Home", pets });
     } catch (error) {
         console.error(error);
     }
@@ -110,4 +111,3 @@ app.post('/update', async (req, res) => {
 
 // * Localhost
 app.listen(3000, () => console.log("Listening on http://localhost:3000"));
-

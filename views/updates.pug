@@ -7,13 +7,25 @@ html
     body    
         h1 Update
         a(href='//localhost:3000/') Return to the homepage
-        p This is cool 
-        p Name
-        input(name="name")
-        p Age
-        input(name="age")
-        p Sickly?
-        input(name="sickly")
-        br
-        button()
-            h2 Submit
+        
+        form#theForm
+            p name
+            input(name="name" id="name" type="text")
+            p Age
+            input(name="age" id="age" type="number")
+            p Sickly?
+            input(name="sickly" id="sickly" type="text")
+            br
+            button(type="submit") Submit
+
+        script.
+            document.getElementById('theForm').addEventListener('submit', function(e) { 
+
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const age = document.getElementById('age').value;
+                const sickly = document.getElementById('sickly').value;
+
+                console.log(name, age, sickly);
+            });
