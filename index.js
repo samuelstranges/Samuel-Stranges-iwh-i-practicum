@@ -48,7 +48,7 @@ app.post("/update-cobj", async (req, res) => {
     // POST route
     await axios.post(route, body_from_update_page, { headers });
 
-    // Why is this like this
+    // Why is this like this?
     res.json({ status: "ok" });
 });
 

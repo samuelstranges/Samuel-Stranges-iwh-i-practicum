@@ -22,14 +22,16 @@ html
             // Needed help figuring out what to do with Claude for JS in pug
             document.getElementById('theForm').addEventListener('submit', function(e) {
 
+                // What does this do
                 e.preventDefault();
 
+                // Pull values into constants to be returned in fetch method body
                 const name = document.getElementById('name').value;
                 const age = document.getElementById('age').value;
                 const sickly = document.getElementById('sickly').value;
 
-                console.log(name, age, sickly);
-
+                // Call update-cobj POST method defined by axios
+                // Why do we have then methods?
                 fetch(
                     '/update-cobj',
                     {
@@ -40,5 +42,4 @@ html
                 )
                 .then(res => res.json())
                 .then(data => console.log('New record:', data))
-                .catch(err => console.error('Error:', err));
             });
