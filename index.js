@@ -8,10 +8,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Call from .env file
-const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
-
-// Used across methods
+const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS; // Call from .env file
+const route = "https://api.hubspot.com/crm/v3/objects/2-282044427";
 const headers = {
     Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
     "Content-Type": "application/json",
@@ -19,36 +17,30 @@ const headers = {
 
 // ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 app.get("/", async (req, res) => {
-    const route = "https://api.hubspot.com/crm/v3/objects/2-282044427";
-
     const resp = await axios.get(route, {
         headers,
         params: {
-            // Claude suggested using `params` to pull custom properties that aren't passed
-            properties: "name,age,sickly",
+            properties: "name,age,sickly", // Use `params` to pull custom properties (usually not passed)
         },
     });
-    const data = resp.data.results;
+    data = resp.data.results;
     res.render("homepage", { title: "Home", data });
 });
 
 // ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
-
 app.get("/updates", async (req, res) => {
     title = "Update Custom Object Form | Integrating With HubSpot I Practicum.";
     res.render("updates", { title });
 });
 
 // ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
-
 app.post("/update-cobj", async (req, res) => {
-    const route = `https://api.hubapi.com/crm/v3/objects/2-282044427/`;
     const body_from_update_page = { properties: req.body };
 
-    // POST route
+    // POST Route
     await axios.post(route, body_from_update_page, { headers });
 
-    // Why is this like this?
+    // Pass back to script in /update something to say we've finished
     res.json({ status: "ok" });
 });
 

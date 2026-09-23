@@ -6,7 +6,7 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body
         h1 Update
-        a(href='//localhost:3000/') Return to the homepage
+        a(href='//localhost:3000/') Return to homepage
 
         form#theForm
             p name
@@ -22,24 +22,25 @@ html
             // Needed help figuring out what to do with Claude for JS in pug
             document.getElementById('theForm').addEventListener('submit', function(e) {
 
-                // What does this do
+                // Override refreshing page with arguments passed rather than doing something with them
                 e.preventDefault();
 
                 // Pull values into constants to be returned in fetch method body
+                const pet_name = document.getElementById('name').value;
                 const name = document.getElementById('name').value;
                 const age = document.getElementById('age').value;
                 const sickly = document.getElementById('sickly').value;
 
-                // Call update-cobj POST method defined by axios
-                // Why do we have then methods?
+                // Call update-cobj POST method defined by our server (that calls Hubspot using axios)
                 fetch(
                     '/update-cobj',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, age, sickly })
+                        body: JSON.stringify({ pet_name, name, age, sickly })
                     }
                 )
-                .then(res => res.json())
-                .then(data => console.log('New record:', data))
+                // Return the script: "ok" as a JSON parsed response body
+                .then(function(res) { return res.json(); })
+                .then(function(data) { window.location.href = '/'; });
             });
