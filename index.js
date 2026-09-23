@@ -25,38 +25,6 @@ const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
 // * * This is sample code to give you a reference for how you should structure your calls.
 
-// * * App.get sample
-app.get("/contacts", async (req, res) => {
-    const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        "Content-Type": "application/json",
-    };
-    try {
-        const resp = await axios.get(contacts, { headers });
-        const data = resp.data.results;
-        res.render("contacts", { title: "Contacts | HubSpot APIs", data });
-    } catch (error) {
-        console.error(error);
-    }
-});
-
-app.get("/test", async (req, res) => {
-    const contacts = "https://api.hubspot.com/crm/v3/objects/contacts";
-    const pets = [{ test_name: "hello" }, { test_name: "yes" }];
-
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        "Content-Type": "application/json",
-    };
-
-    try {
-        res.render("test", { title: "Test title" });
-    } catch (error) {
-        console.error(error);
-    }
-});
-
 // Finished method
 app.get("/", async (req, res) => {
     const pets_url = "https://api.hubspot.com/crm/v3/objects/2-282044427";
