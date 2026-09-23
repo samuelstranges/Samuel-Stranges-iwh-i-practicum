@@ -20,15 +20,15 @@ app.get("/", async (req, res) => {
     const resp = await axios.get(route, {
         headers,
         params: {
-            properties: "name,age,sickly", // Use `params` to pull custom properties (usually not passed)
+            properties: "name,age,sickly", // Use 'params' to pull custom properties (usually not passed)
         },
     });
-    data = resp.data.results;
+    const data = resp.data.results;
     res.render("homepage", { title: "Home", data });
 });
 
 // ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
-app.get("/updates", async (req, res) => {
+app.get("/update-cobj", async (req, res) => {
     title = "Update Custom Object Form | Integrating With HubSpot I Practicum.";
     res.render("updates", { title });
 });
