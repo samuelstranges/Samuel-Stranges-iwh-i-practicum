@@ -11,79 +11,43 @@ app.use(express.json());
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
-// TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
+const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    "Content-Type": "application/json",
+};
 
-// * Code for Route 1 goes here
-
-// TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
-
-// * Code for Route 2 goes here
-
-// TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
-
-// * Code for Route 3 goes here
-
-// * * This is sample code to give you a reference for how you should structure your calls.
-
-// Finished method
+// ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 app.get("/", async (req, res) => {
-    const pets_url = "https://api.hubspot.com/crm/v3/objects/2-282044427";
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        "Content-Type": "application/json",
-    };
+    const route = "https://api.hubspot.com/crm/v3/objects/2-282044427";
 
-    try {
-        const resp = await axios.get(pets_url, {
-            headers,
-
-            params: {
-                // Claude suggested using `params` to pull custom params
-                properties: "name,age,sickly",
-            },
-        });
-        const data = resp.data.results;
-        res.render("homepage", { title: "Home", data });
-    } catch (error) {
-        console.error(error);
-    }
+    const resp = await axios.get(route, {
+        headers,
+        params: {
+            // Claude suggested using `params` to pull custom properties that aren't passed
+            properties: "name,age,sickly",
+        },
+    });
+    const data = resp.data.results;
+    res.render("homepage", { title: "Home", data });
 });
 
-app.get("/update-cobj", async (req, res) => {
-    try {
-        res.render("updates", {
-            title: "Update Custom Object Form | Integrating With HubSpot I Practicum.",
-        });
-    } catch (error) {
-        console.error(error);
-    }
+// ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
+
+app.get("/updates", async (req, res) => {
+    title = "Update Custom Object Form | Integrating With HubSpot I Practicum.";
+    res.render("updates", { title });
 });
 
-/** 
-* * App.post sample
-app.post('/update', async (req, res) => {
-    const update = {
-        properties: {
-            "favorite_book": req.body.newVal
-        }
-    }
+// ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
-    const email = req.query.email;
-    const updateContact = `https://api.hubapi.com/crm/v3/objects/contacts/${email}?idProperty=email`;
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        'Content-Type': 'application/json'
-    };
+app.post("/update-cobj", async (req, res) => {
+    const body_from_update = { properties: req.body };
+    const route = `https://api.hubapi.com/crm/v3/objects/2-282044427/`;
 
-    try { 
-        await axios.patch(updateContact, update, { headers } );
-        res.redirect('back');
-    } catch(err) {
-        console.error(err);
-    }
-
+    // POST route
+    await axios.post(route, body_from_update, { headers });
+    res.json({ status: "ok" });
 });
-*/
 
 // * Localhost
 app.listen(3000, () => console.log("Listening on http://localhost:3000"));

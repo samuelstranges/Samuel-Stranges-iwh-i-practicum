@@ -1,13 +1,13 @@
 doctype html
-html 
-    head 
+html
+    head
         title= title
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
-    body    
+    body
         h1 Update
         a(href='//localhost:3000/') Return to the homepage
-        
+
         form#theForm
             p name
             input(name="name" id="name" type="text")
@@ -19,7 +19,8 @@ html
             button(type="submit") Submit
 
         script.
-            document.getElementById('theForm').addEventListener('submit', function(e) { 
+            // Needed help figuring out what to do with Claude for JS in pug
+            document.getElementById('theForm').addEventListener('submit', function(e) {
 
                 e.preventDefault();
 
@@ -28,4 +29,16 @@ html
                 const sickly = document.getElementById('sickly').value;
 
                 console.log(name, age, sickly);
+
+                fetch(
+                    '/update-cobj',
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, age, sickly })
+                    }
+                )
+                .then(res => res.json())
+                .then(data => console.log('New record:', data))
+                .catch(err => console.error('Error:', err));
             });
